@@ -3,8 +3,8 @@
 #include <time.h>
 #include <memory.h>
 #include <omp.h>
-#define OMP 2
-#define tile_size 16
+#include "setting.h"
+
 double diff_in_second(struct timespec t1, struct timespec t2)
 {
     struct timespec diff;
@@ -38,16 +38,16 @@ int main (int argc, char **argv) {
     fp = (argc == 1) ? fopen("input.txt", "r") : fopen(argv[1], "r");
 
     /* scan matrix a */
-    fscanf(fp,"%s", a_buff_row);
+    int status = fscanf(fp,"%s", a_buff_row);
     a_row = atoi(a_buff_row);
-    fscanf(fp,"%s", a_buff_col);
+    status = fscanf(fp,"%s", a_buff_col);
     a_col = atoi(a_buff_col);
     
     a = (int*)malloc(sizeof(int*) * a_row * a_col);
     
     for(i = 0 ; i < a_row ; i++){
         for(j = 0 ; j < a_col ; j++){
-            fscanf(fp,"%s", buff);
+            status = fscanf(fp,"%s", buff);
             num = atoi(buff);
             a[i * a_row + j] = num;
             memset(buff, 0, 255);
@@ -55,16 +55,16 @@ int main (int argc, char **argv) {
     }
 
     /* scanf matrix b */
-    fscanf(fp,"%s", b_buff_row);
+    status = fscanf(fp,"%s", b_buff_row);
     b_row = atoi(b_buff_row);
-    fscanf(fp,"%s", b_buff_col);
+    status = fscanf(fp,"%s", b_buff_col);
     b_col = atoi(b_buff_col);
     
     b = (int*)malloc(sizeof(int*) * b_row * b_col);
     
     for(i = 0 ; i < b_row ; i++){
         for(j = 0 ; j < b_col ; j++){
-            fscanf(fp,"%s", buff);
+            status = fscanf(fp,"%s", buff);
             num = atoi(buff);
             b[j * b_row + i] = num;
             memset(buff, 0, 255);

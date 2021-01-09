@@ -3,8 +3,8 @@
 #include <time.h>
 #include <memory.h>
 #include <omp.h>
-#define OMP 8
-#define tile_size 16
+#include "setting.h"
+
 double diff_in_second(struct timespec t1, struct timespec t2)
 {
 	struct timespec diff;
@@ -213,9 +213,9 @@ int main (int argc, char **argv)
 	memset(b_buff_col, 0, 7);
 	memset(buff, 0, 7);
 
-	fscanf(fp,"%s", a_buff_row);
+	int status = fscanf(fp,"%s", a_buff_row);
 	int a_row = atoi(a_buff_row);
-	fscanf(fp,"%s", a_buff_col);
+	status = fscanf(fp,"%s", a_buff_col);
 	int a_col = atoi(a_buff_col);
 	if(a_row != a_col) {
 		printf("error a input!!\n");
@@ -231,7 +231,7 @@ int main (int argc, char **argv)
 	a = createMatrix(input_size);
 	for(i = 0 ; i < a_row ; i++) {
 		for(j = 0 ; j < a_col ; j++) {
-			fscanf(fp,"%s",buff);
+			status = fscanf(fp,"%s",buff);
 			num = atoi(buff);
 			a[i * a_row +  j] = num;
 			memset(buff, 0, 7);
@@ -247,9 +247,9 @@ int main (int argc, char **argv)
 		}
 	}
 
-	fscanf(fp,"%s", b_buff_row);
+	status = fscanf(fp,"%s", b_buff_row);
 	int b_row = atoi(b_buff_row);
-	fscanf(fp,"%s", b_buff_col);
+	status = fscanf(fp,"%s", b_buff_col);
 	int b_col = atoi(b_buff_col);
 	if(b_row != b_col || b_row != a_row || b_row != a_col) {
 		printf("error b input!!\n");
@@ -259,7 +259,7 @@ int main (int argc, char **argv)
 	b = createMatrix(input_size);
 	for(i = 0 ; i < b_row ; i++) {
 		for(j = 0 ; j < b_col ; j++) {
-			fscanf(fp,"%s", buff);
+			status = fscanf(fp,"%s", buff);
 			num = atoi(buff);
 			b[i * b_row + j] = num;
 			memset(buff, 0, 7);
